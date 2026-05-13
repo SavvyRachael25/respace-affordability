@@ -14,7 +14,7 @@ import {
   BUYER_POOL_URL,
   RESPACE_THEME,
 } from "@/lib/affordability/config";
-import { getProperty } from "@/lib/respace/properties";
+import { getProperty, suiteDisplayName } from "@/lib/respace/properties";
 import { PropertyGallery } from "./PropertyGallery";
 import { PropertyDetail } from "./PropertyDetail";
 
@@ -44,20 +44,28 @@ export function AffordabilityApp() {
   const [capturing, setCapturing] = useState(false);
 
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+  const [selectedSuiteId, setSelectedSuiteId] = useState<string | undefined>(
+    undefined
+  );
   const [pendingSlugFromUrl, setPendingSlugFromUrl] = useState<string | null>(
     null
   );
+  const [pendingSuiteFromUrl, setPendingSuiteFromUrl] = useState<
+    string | null
+  >(null);
   const [utm, setUtm] = useState<{ campaign?: string; source?: string }>({});
 
-  // Read ?property=<slug>&utm_source=...&utm_campaign=... on mount so share
-  // links can deep-link to a specific property after the calculator runs.
+  // Read ?property=<slug>&suite=<id>&utm_source=...&utm_campaign=... on mount.
+  // Share links can deep-link to a property OR a specific suite within it.
   useEffect(() => {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
     const slug = params.get("property");
+    const suite = params.get("suite");
     const utmSource = params.get("utm_source") ?? undefined;
     const utmCampaign = params.get("utm_campaign") ?? undefined;
     if (slug) setPendingSlugFromUrl(slug);
+    if (suite) setPendingSuiteFromUrl(suite);
     if (utmSource || utmCampaign) setUtm({ source: utmSource, campaign: utmCampaign });
   }, []);
 
@@ -65,6 +73,17 @@ export function AffordabilityApp() {
     () => (selectedSlug ? getProperty(selectedSlug) : undefined),
     [selectedSlug]
   );
+
+  const selectedSuite = useMemo(() => {
+    if (!selectedProperty || !selectedSuiteId) return undefined;
+    return selectedProperty.suitesAvailable.find(
+      (s) => s.suiteId === selectedSuiteId
+    );
+  }, [selectedProperty, selectedSuiteId]);
+
+  const selectedSuiteLabel = selectedSuite
+    ? suiteDisplayName(selectedSuite)
+    : undefined;
 
   function parseNumeric(v: string): number {
     return Number(v.replace(/[^0-9.]/g, "")) || 0;
@@ -142,10 +161,21 @@ export function AffordabilityApp() {
     } finally {
       setCapturing(false);
 
-      // If they arrived via a friend's share link, jump straight to the property.
+      // If they arrived via a friend's share link, jump straight to the
+      // property and pre-select the suite if one was shared.
       if (pendingSlugFromUrl && getProperty(pendingSlugFromUrl)) {
+        const property = getProperty(pendingSlugFromUrl);
         setSelectedSlug(pendingSlugFromUrl);
+        if (
+          pendingSuiteFromUrl &&
+          property?.suitesAvailable.some(
+            (s) => s.suiteId === pendingSuiteFromUrl
+          )
+        ) {
+          setSelectedSuiteId(pendingSuiteFromUrl);
+        }
         setPendingSlugFromUrl(null);
+        setPendingSuiteFromUrl(null);
         setPhase("property");
       } else {
         setPhase("captured");
@@ -171,6 +201,7 @@ export function AffordabilityApp() {
 
   function handleBackToGallery() {
     setSelectedSlug(null);
+    setSelectedSuiteId(undefined);
     setPhase("captured");
     setTimeout(() => {
       document
@@ -455,6 +486,8 @@ export function AffordabilityApp() {
           downPayment={parseNumeric(downPayment)}
           initialEmail={email}
           utm={utm}
+          selectedSuiteId={selectedSuiteId}
+          onSelectSuite={setSelectedSuiteId}
           onBack={handleBackToGallery}
           onSubmitted={handleLeadSubmitted}
         />
@@ -464,7 +497,7 @@ export function AffordabilityApp() {
       {showLeadSubmitted && selectedProperty ? (
         <LeadSubmittedBlock
           propertyName={selectedProperty.name}
-          propertySlug={selectedProperty.slug}
+          suiteLabel={selectedSuiteLabel}
           onBackToGallery={handleBackToGallery}
         />
       ) : null}
@@ -473,9 +506,12 @@ export function AffordabilityApp() {
       {showShareAndFoundation ? (
         <FooterBlocks
           shareSlug={selectedProperty?.slug}
+          shareSuiteId={selectedSuiteId}
           shareContext={
             phase === "lead-submitted" && selectedProperty
-              ? selectedProperty.name
+              ? selectedSuiteLabel
+                ? `${selectedSuiteLabel} at ${selectedProperty.name}`
+                : selectedProperty.name
               : undefined
           }
         />
@@ -1021,13 +1057,15 @@ function EmailCaptureBlock({
 
 function LeadSubmittedBlock({
   propertyName,
-  propertySlug,
+  suiteLabel,
   onBackToGallery,
 }: {
   propertyName: string;
-  propertySlug: string;
+  suiteLabel?: string;
   onBackToGallery: () => void;
 }) {
+  const target = suiteLabel ? `${suiteLabel} at ${propertyName}` : propertyName;
+  const shareTarget = suiteLabel ? `${suiteLabel} at ${propertyName}` : propertyName;
   return (
     <section style={{ padding: "80px 24px 40px" }}>
       <div
@@ -1048,7 +1086,7 @@ function LeadSubmittedBlock({
             marginBottom: 16,
           }}
         >
-          Interest received
+          {suiteLabel ? `${suiteLabel} claimed` : "Interest received"}
         </p>
         <h2
           style={{
@@ -1063,7 +1101,7 @@ function LeadSubmittedBlock({
         >
           Thanks. A reSpace broker will reach out within{" "}
           <em style={{ fontStyle: "italic", color: T.coral }}>24 hours</em>{" "}
-          about {propertyName}.
+          about {target}.
         </h2>
         <p
           style={{
@@ -1075,7 +1113,7 @@ function LeadSubmittedBlock({
           }}
         >
           While you wait, send this calculator to anyone you&apos;d want to
-          co-own {propertyName}{" "}with. They&apos;ll run their own number and
+          co-own {shareTarget}{" "}with. They&apos;ll run their own number and
           we&apos;ll put a group together.
         </p>
         <button
@@ -1096,7 +1134,6 @@ function LeadSubmittedBlock({
         >
           Browse more properties
         </button>
-        <p style={{ display: "none" }}>{propertySlug}</p>
       </div>
     </section>
   );
@@ -1104,9 +1141,11 @@ function LeadSubmittedBlock({
 
 function FooterBlocks({
   shareSlug,
+  shareSuiteId,
   shareContext,
 }: {
   shareSlug?: string;
+  shareSuiteId?: string;
   shareContext?: string;
 }) {
   const [copied, setCopied] = useState(false);
@@ -1121,8 +1160,9 @@ function FooterBlocks({
       utm_source: "friend",
       utm_campaign: "affordability_share",
     });
+    if (shareSuiteId) params.set("suite", shareSuiteId);
     return `${base}?${params.toString()}`;
-  }, [shareSlug]);
+  }, [shareSlug, shareSuiteId]);
 
   function copy() {
     if (typeof window === "undefined") return;

@@ -1,9 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo } from "react";
 import { RESPACE_THEME } from "@/lib/affordability/config";
 import { fmtUSD } from "@/lib/affordability/calculate";
-import type { ReSpaceProperty, SuiteSummary } from "@/lib/respace/properties";
+import {
+  fitSummary,
+  suiteDisplayName,
+  type ReSpaceProperty,
+  type SuiteSummary,
+} from "@/lib/respace/properties";
 import type { AffordabilityResult } from "@/lib/affordability/calculate";
 import { LeadCaptureForm } from "./LeadCaptureForm";
 
@@ -18,6 +23,8 @@ export function PropertyDetail({
   downPayment,
   initialEmail,
   utm,
+  selectedSuiteId,
+  onSelectSuite,
   onBack,
   onSubmitted,
 }: {
@@ -29,11 +36,31 @@ export function PropertyDetail({
   downPayment: number;
   initialEmail: string;
   utm: { campaign?: string; source?: string };
+  selectedSuiteId?: string;
+  onSelectSuite: (suiteId: string | undefined) => void;
   onBack: () => void;
   onSubmitted: () => void;
 }) {
-  const [selectedSuite, setSelectedSuite] = useState<string | undefined>(
-    undefined
+  const shareCeiling = affordability.solo.maxHomeValue;
+
+  // Sort suites: within-reach descending by price (best match first),
+  // then stretch ascending by price (closest stretch first). Sold/reserved
+  // end up at the bottom via the status filter inside fitSummary; we add
+  // them back separately so the list stays complete.
+  const sortedSuites: SuiteSummary[] = useMemo(() => {
+    const fit = fitSummary(property.suitesAvailable, shareCeiling);
+    const sold = property.suitesAvailable.filter(
+      (s) => s.status !== "available"
+    );
+    return [...fit.withinReach, ...fit.stretch, ...sold];
+  }, [property.suitesAvailable, shareCeiling]);
+
+  const selectedSuite = useMemo(
+    () =>
+      selectedSuiteId
+        ? property.suitesAvailable.find((s) => s.suiteId === selectedSuiteId)
+        : undefined,
+    [selectedSuiteId, property.suitesAvailable]
   );
 
   const statusLabel =
@@ -68,15 +95,15 @@ export function PropertyDetail({
         </button>
 
         <div
+          className="prop-detail-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "1.1fr 1fr",
             gap: 48,
             alignItems: "start",
           }}
-          className="prop-detail-grid"
         >
-          {/* Left: hero + property info */}
+          {/* Left: hero + property info + suite picker */}
           <div>
             <div
               style={{
@@ -184,33 +211,54 @@ export function PropertyDetail({
               </p>
             ) : null}
 
-            <h4
-              style={{
-                fontFamily: T.fontDisplay,
-                fontSize: 22,
-                fontWeight: 600,
-                color: T.textOnDark,
-                marginTop: 36,
-                marginBottom: 16,
-              }}
-            >
-              Suites available
-            </h4>
+            {/* Suite picker — the picture-yourself moment. */}
             <div
               style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+                marginTop: 36,
+                marginBottom: 16,
+                display: "flex",
+                alignItems: "baseline",
+                justifyContent: "space-between",
+                flexWrap: "wrap",
                 gap: 12,
               }}
             >
-              {property.suitesAvailable.map((s) => (
+              <h4
+                style={{
+                  fontFamily: T.fontDisplay,
+                  fontSize: 24,
+                  fontWeight: 700,
+                  color: T.textOnDark,
+                  letterSpacing: "-0.01em",
+                }}
+              >
+                Pick the suite you want.
+              </h4>
+              <p
+                style={{
+                  fontSize: 13,
+                  color: T.textMuted,
+                }}
+              >
+                Coral suites are within your reach.
+              </p>
+            </div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+                gap: 12,
+              }}
+            >
+              {sortedSuites.map((s) => (
                 <SuiteCard
                   key={s.suiteId}
                   suite={s}
-                  selected={selectedSuite === s.suiteId}
+                  shareCeiling={shareCeiling}
+                  selected={selectedSuiteId === s.suiteId}
                   onSelect={() =>
-                    setSelectedSuite(
-                      selectedSuite === s.suiteId ? undefined : s.suiteId
+                    onSelectSuite(
+                      selectedSuiteId === s.suiteId ? undefined : s.suiteId
                     )
                   }
                 />
@@ -233,7 +281,11 @@ export function PropertyDetail({
               income={income}
               debts={debts}
               downPayment={downPayment}
-              suiteId={selectedSuite}
+              suiteId={selectedSuite?.suiteId}
+              suiteLabel={
+                selectedSuite ? suiteDisplayName(selectedSuite) : undefined
+              }
+              suiteSharePrice={selectedSuite?.sharePrice}
               utm={utm}
               onSubmitted={onSubmitted}
             />
@@ -293,65 +345,135 @@ function Stat({
 
 function SuiteCard({
   suite,
+  shareCeiling,
   selected,
   onSelect,
 }: {
   suite: SuiteSummary;
+  shareCeiling: number;
   selected: boolean;
   onSelect: () => void;
 }) {
   const disabled = suite.status !== "available";
+  const withinReach = !disabled && suite.sharePrice <= shareCeiling;
+  const stretch = !disabled && !withinReach;
+
+  // Borders + backgrounds tell three stories at a glance:
+  //   selected  → bold coral fill + coral border
+  //   withinReach → soft coral wash, coral border
+  //   stretch   → muted navySoft, dim border
+  let bg = T.navySoft;
+  let border = T.borderOnDark;
+  if (selected) {
+    bg = "rgba(232,96,76,0.18)";
+    border = T.coral;
+  } else if (withinReach) {
+    bg = "rgba(232,96,76,0.06)";
+    border = "rgba(232,96,76,0.35)";
+  }
+
   return (
     <button
       type="button"
       onClick={disabled ? undefined : onSelect}
+      aria-pressed={selected}
       style={{
         textAlign: "left",
-        background: selected ? "rgba(232,96,76,0.10)" : T.navySoft,
-        border: `1px solid ${
-          selected ? T.coral : T.borderOnDark
-        }`,
+        background: bg,
+        border: `${selected ? "2px" : "1px"} solid ${border}`,
         borderRadius: 4,
-        padding: 16,
+        padding: selected ? 15 : 16,
         cursor: disabled ? "not-allowed" : "pointer",
         opacity: disabled ? 0.5 : 1,
         fontFamily: T.fontBody,
         color: T.textOnDark,
-        transition: "border 200ms ease, background 200ms ease",
+        position: "relative",
+        transition:
+          "border 200ms ease, background 200ms ease, transform 150ms ease",
+      }}
+      onMouseEnter={(e) => {
+        if (!disabled && !selected)
+          e.currentTarget.style.transform = "translateY(-2px)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = "translateY(0)";
       }}
     >
-      <p
-        style={{
-          fontSize: 11,
-          letterSpacing: "0.12em",
-          color: T.coral,
-          textTransform: "uppercase",
-          fontWeight: 700,
-          marginBottom: 6,
-        }}
-      >
-        {suite.bedrooms} bd · {suite.bathrooms} ba
-      </p>
+      {/* Picked badge */}
+      {selected ? (
+        <span
+          aria-hidden
+          style={{
+            position: "absolute",
+            top: 12,
+            right: 12,
+            fontSize: 10,
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            fontWeight: 700,
+            color: T.white,
+            background: T.coral,
+            padding: "4px 8px",
+            borderRadius: 2,
+          }}
+        >
+          Picked
+        </span>
+      ) : null}
+
+      {/* Name first — this is the picture-yourself anchor */}
       <p
         style={{
           fontFamily: T.fontDisplay,
-          fontSize: 20,
+          fontSize: 18,
+          fontWeight: 700,
+          color: T.textOnDark,
+          letterSpacing: "-0.005em",
+          marginBottom: 8,
+          lineHeight: 1.15,
+        }}
+      >
+        {suiteDisplayName(suite)}
+      </p>
+
+      <p
+        style={{
+          fontFamily: T.fontDisplay,
+          fontSize: 22,
           fontWeight: 700,
           color: T.coral,
           lineHeight: 1,
-          marginBottom: 6,
+          marginBottom: 8,
         }}
       >
         {fmtUSD(suite.sharePrice)}
       </p>
+
       <p
         style={{
           fontSize: 12,
           color: T.textMuted,
+          marginBottom: 8,
         }}
       >
-        {suite.squareFeet} sq ft
+        {suite.bedrooms} bd · {suite.bathrooms} ba · {suite.squareFeet} sq ft
       </p>
+
+      {/* Fit indicator */}
+      {!disabled ? (
+        <p
+          style={{
+            fontSize: 11,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            fontWeight: 700,
+            color: withinReach ? T.coral : T.textSubtle,
+          }}
+        >
+          {withinReach ? "Within your reach" : "Stretch"}
+        </p>
+      ) : null}
+
       {disabled ? (
         <p
           style={{
@@ -366,6 +488,9 @@ function SuiteCard({
           {suite.status}
         </p>
       ) : null}
+
+      {/* Reserve room for hover */}
+      {stretch ? null : null}
     </button>
   );
 }

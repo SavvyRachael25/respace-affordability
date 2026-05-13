@@ -67,7 +67,12 @@ export function PropertyGallery({
             }}
           >
             {properties.map((p) => (
-              <PropertyCard key={p.id} property={p} onSelect={onSelect} />
+              <PropertyCard
+                key={p.id}
+                property={p}
+                shareCeiling={shareCeiling}
+                onSelect={onSelect}
+              />
             ))}
           </div>
         )}

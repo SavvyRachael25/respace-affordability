@@ -2,17 +2,27 @@
 
 import { RESPACE_THEME } from "@/lib/affordability/config";
 import { fmtUSD } from "@/lib/affordability/calculate";
-import type { ReSpaceProperty } from "@/lib/respace/properties";
+import {
+  fitSummary,
+  suiteDisplayName,
+  type ReSpaceProperty,
+} from "@/lib/respace/properties";
 
 const T = RESPACE_THEME;
 
 export function PropertyCard({
   property,
+  shareCeiling,
   onSelect,
 }: {
   property: ReSpaceProperty;
+  shareCeiling: number;
   onSelect: (slug: string) => void;
 }) {
+  const fit = fitSummary(property.suitesAvailable, shareCeiling);
+  const totalAvailable = fit.withinReach.length + fit.stretch.length;
+  const fitCount = fit.withinReach.length;
+  const top = fit.topMatch;
   const statusLabel =
     property.status === "live"
       ? "Live"
@@ -190,6 +200,56 @@ export function PropertyCard({
           private suites · {property.shareCountAvailable} shares open
         </p>
 
+        {/* The "this could be yours" moment — fit summary against buyer's max. */}
+        {totalAvailable > 0 ? (
+          <div
+            style={{
+              marginTop: 16,
+              padding: "14px 16px",
+              borderRadius: 4,
+              background:
+                fitCount > 0
+                  ? "rgba(232,96,76,0.10)"
+                  : "rgba(255,255,255,0.04)",
+              border: `1px solid ${
+                fitCount > 0 ? "rgba(232,96,76,0.35)" : T.borderOnDark
+              }`,
+            }}
+          >
+            <p
+              style={{
+                fontSize: 10,
+                letterSpacing: "0.15em",
+                color: fitCount > 0 ? T.coral : T.textSubtle,
+                textTransform: "uppercase",
+                fontWeight: 700,
+                marginBottom: 6,
+              }}
+            >
+              {fitCount > 0
+                ? `${fitCount} of ${totalAvailable} within your reach`
+                : "Just above your range"}
+            </p>
+            {top ? (
+              <p
+                style={{
+                  fontSize: 14,
+                  color: T.textOnDark,
+                  lineHeight: 1.4,
+                }}
+              >
+                {fitCount > 0 ? "Top match: " : "Closest: "}
+                <strong style={{ color: T.textOnDark, fontWeight: 700 }}>
+                  {suiteDisplayName(top)}
+                </strong>{" "}
+                <span style={{ color: T.coral, fontWeight: 700 }}>
+                  {fmtUSD(top.sharePrice)}
+                </span>
+              </p>
+            ) : null}
+          </div>
+        ) : null}
+
         <div
           style={{
             marginTop: 20,
@@ -202,7 +262,7 @@ export function PropertyCard({
             letterSpacing: "0.02em",
           }}
         >
-          Express interest in this share <span aria-hidden>{"→"}</span>
+          Pick your suite <span aria-hidden>{"→"}</span>
         </div>
       </div>
     </button>

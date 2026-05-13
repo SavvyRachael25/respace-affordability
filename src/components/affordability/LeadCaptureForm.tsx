@@ -18,6 +18,7 @@ export type LeadSubmission = {
   propertyName: string;
   sharePrice: number;
   suiteId?: string;
+  suiteLabel?: string;
   annualIncome: number;
   monthlyDebts: number;
   downPayment: number;
@@ -38,6 +39,8 @@ export function LeadCaptureForm({
   debts,
   downPayment,
   suiteId,
+  suiteLabel,
+  suiteSharePrice,
   utm,
   onSubmitted,
 }: {
@@ -49,6 +52,8 @@ export function LeadCaptureForm({
   debts: number;
   downPayment: number;
   suiteId?: string;
+  suiteLabel?: string;
+  suiteSharePrice?: number;
   utm: { campaign?: string; source?: string };
   onSubmitted: () => void;
 }) {
@@ -78,8 +83,9 @@ export function LeadCaptureForm({
       propertyId: property.id,
       propertySlug: property.slug,
       propertyName: property.name,
-      sharePrice: property.sharePriceMin,
+      sharePrice: suiteSharePrice ?? property.sharePriceMin,
       suiteId,
+      suiteLabel,
       annualIncome: income,
       monthlyDebts: debts,
       downPayment,
@@ -128,7 +134,7 @@ export function LeadCaptureForm({
           marginBottom: 12,
         }}
       >
-        Step 2 of 2
+        {suiteLabel ? "You picked a suite" : "Step 2 of 2"}
       </p>
       <h3
         style={{
@@ -141,7 +147,9 @@ export function LeadCaptureForm({
           lineHeight: 1.15,
         }}
       >
-        Tell our broker who you are.
+        {suiteLabel
+          ? `Claim ${suiteLabel} at ${property.name}.`
+          : "Tell our broker who you are."}
       </h3>
       <p
         style={{
@@ -152,7 +160,9 @@ export function LeadCaptureForm({
         }}
       >
         We&apos;ll attach your affordability profile and pass it to the reSpace
-        broker handling {property.name}. They reach out within 24 hours.
+        broker handling{" "}
+        {suiteLabel ? `${suiteLabel} at ${property.name}` : property.name}.
+        They reach out within 24 hours.
       </p>
 
       <FormField
@@ -189,7 +199,8 @@ export function LeadCaptureForm({
             marginBottom: 6,
           }}
         >
-          Tell us anything about who you&apos;d want to co-own {property.name}{" "}
+          Tell us anything about who you&apos;d want to co-own{" "}
+          {suiteLabel ? `${suiteLabel} at ${property.name}` : property.name}{" "}
           with (optional)
         </label>
         <textarea
@@ -241,7 +252,11 @@ export function LeadCaptureForm({
           transition: "background 200ms ease",
         }}
       >
-        {submitting ? "Sending..." : "Submit my interest"}
+        {submitting
+          ? "Sending..."
+          : suiteLabel
+          ? `Claim ${suiteLabel}`
+          : "Submit my interest"}
       </button>
 
       <p

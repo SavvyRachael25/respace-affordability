@@ -15,12 +15,12 @@
     "status": "live",
     "detailUrl": "https://respace.co",
     "suitesAvailable": [
-      { "suiteId": "leschi-outlook-a", "bedrooms": 1, "bathrooms": 1, "squareFeet": 360, "sharePrice": 118750, "status": "available" },
-      { "suiteId": "leschi-outlook-b", "bedrooms": 1, "bathrooms": 1, "squareFeet": 360, "sharePrice": 118750, "status": "available" },
-      { "suiteId": "leschi-conservatory", "bedrooms": 1, "bathrooms": 1, "squareFeet": 420, "sharePrice": 159500, "status": "available" },
-      { "suiteId": "leschi-gable", "bedrooms": 1, "bathrooms": 1, "squareFeet": 480, "sharePrice": 187500, "status": "available" },
-      { "suiteId": "leschi-promenade", "bedrooms": 1, "bathrooms": 1, "squareFeet": 580, "sharePrice": 249000, "status": "available" },
-      { "suiteId": "leschi-atelier", "bedrooms": 1, "bathrooms": 1, "squareFeet": 580, "sharePrice": 249000, "status": "available" }
+      { "suiteId": "leschi-outlook-a", "label": "The Outlook A", "bedrooms": 1, "bathrooms": 1, "squareFeet": 360, "sharePrice": 118750, "status": "available" },
+      { "suiteId": "leschi-outlook-b", "label": "The Outlook B", "bedrooms": 1, "bathrooms": 1, "squareFeet": 360, "sharePrice": 118750, "status": "available" },
+      { "suiteId": "leschi-conservatory", "label": "The Conservatory", "bedrooms": 1, "bathrooms": 1, "squareFeet": 420, "sharePrice": 159500, "status": "available" },
+      { "suiteId": "leschi-gable", "label": "The Gable", "bedrooms": 1, "bathrooms": 1, "squareFeet": 480, "sharePrice": 187500, "status": "available" },
+      { "suiteId": "leschi-promenade", "label": "The Promenade", "bedrooms": 1, "bathrooms": 1, "squareFeet": 580, "sharePrice": 249000, "status": "available" },
+      { "suiteId": "leschi-atelier", "label": "The Atelier", "bedrooms": 1, "bathrooms": 1, "squareFeet": 580, "sharePrice": 249000, "status": "available" }
     ]
   },
   {
@@ -40,14 +40,14 @@
     "expectedMoveIn": "2026",
     "detailUrl": "https://thegrovebyrespace.co",
     "suitesAvailable": [
-      { "suiteId": "grove-1", "bedrooms": 1, "bathrooms": 1, "squareFeet": 360, "sharePrice": 179000, "status": "available" },
-      { "suiteId": "grove-2", "bedrooms": 1, "bathrooms": 1, "squareFeet": 380, "sharePrice": 189000, "status": "available" },
-      { "suiteId": "grove-3", "bedrooms": 1, "bathrooms": 1, "squareFeet": 400, "sharePrice": 199000, "status": "available" },
-      { "suiteId": "grove-4", "bedrooms": 1, "bathrooms": 1, "squareFeet": 420, "sharePrice": 215000, "status": "available" },
-      { "suiteId": "grove-5", "bedrooms": 1, "bathrooms": 1, "squareFeet": 440, "sharePrice": 235000, "status": "available" },
-      { "suiteId": "grove-6", "bedrooms": 1, "bathrooms": 1, "squareFeet": 460, "sharePrice": 255000, "status": "available" },
-      { "suiteId": "grove-7", "bedrooms": 1, "bathrooms": 1, "squareFeet": 480, "sharePrice": 269000, "status": "available" },
-      { "suiteId": "grove-8", "bedrooms": 1, "bathrooms": 1, "squareFeet": 500, "sharePrice": 279000, "status": "available" }
+      { "suiteId": "grove-1", "label": "Suite 1", "bedrooms": 1, "bathrooms": 1, "squareFeet": 360, "sharePrice": 179000, "status": "available" },
+      { "suiteId": "grove-2", "label": "Suite 2", "bedrooms": 1, "bathrooms": 1, "squareFeet": 380, "sharePrice": 189000, "status": "available" },
+      { "suiteId": "grove-3", "label": "Suite 3", "bedrooms": 1, "bathrooms": 1, "squareFeet": 400, "sharePrice": 199000, "status": "available" },
+      { "suiteId": "grove-4", "label": "Suite 4", "bedrooms": 1, "bathrooms": 1, "squareFeet": 420, "sharePrice": 215000, "status": "available" },
+      { "suiteId": "grove-5", "label": "Suite 5", "bedrooms": 1, "bathrooms": 1, "squareFeet": 440, "sharePrice": 235000, "status": "available" },
+      { "suiteId": "grove-6", "label": "Suite 6", "bedrooms": 1, "bathrooms": 1, "squareFeet": 460, "sharePrice": 255000, "status": "available" },
+      { "suiteId": "grove-7", "label": "Suite 7", "bedrooms": 1, "bathrooms": 1, "squareFeet": 480, "sharePrice": 269000, "status": "available" },
+      { "suiteId": "grove-8", "label": "Suite 8", "bedrooms": 1, "bathrooms": 1, "squareFeet": 500, "sharePrice": 279000, "status": "available" }
     ]
   },
   {
