@@ -24,8 +24,8 @@ export default function RootLayout({
         style={{
           margin: 0,
           padding: 0,
-          background: "#1A1F2E",
-          color: "#F5F1EA",
+          background: "#1A1A2E",
+          color: "#FFFFFF",
           fontFamily:
             "'DM Sans', system-ui, -apple-system, sans-serif",
           WebkitFontSmoothing: "antialiased",

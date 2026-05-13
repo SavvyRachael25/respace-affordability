@@ -1,0 +1,68 @@
+[
+  {
+    "id": "the-grove",
+    "slug": "the-grove",
+    "name": "The Grove",
+    "neighborhood": "Ballard, Seattle",
+    "metro": "Seattle, WA",
+    "totalPrice": 1480000,
+    "shareCount": 4,
+    "sharePriceMin": 320000,
+    "sharePriceMax": 420000,
+    "shareCountAvailable": 3,
+    "bedroomsTotal": 5,
+    "description": "A restored 1908 craftsman in the heart of Ballard. Private suites surround a shared great room, garden, and a deep front porch. Walk to the locks, the weekend market, and a dozen good restaurants.",
+    "status": "live",
+    "expectedMoveIn": "2026-09",
+    "detailUrl": "https://respace.co/thegrove",
+    "suitesAvailable": [
+      { "suiteId": "grove-s1", "bedrooms": 1, "bathrooms": 1, "squareFeet": 380, "sharePrice": 320000, "status": "available" },
+      { "suiteId": "grove-s2", "bedrooms": 1, "bathrooms": 1, "squareFeet": 420, "sharePrice": 360000, "status": "available" },
+      { "suiteId": "grove-s3", "bedrooms": 2, "bathrooms": 1, "squareFeet": 520, "sharePrice": 420000, "status": "available" }
+    ]
+  },
+  {
+    "id": "leschi-house",
+    "slug": "leschi-house",
+    "name": "Leschi House",
+    "neighborhood": "Leschi, Seattle",
+    "metro": "Seattle, WA",
+    "totalPrice": 1820000,
+    "shareCount": 4,
+    "sharePriceMin": 395000,
+    "sharePriceMax": 510000,
+    "shareCountAvailable": 4,
+    "bedroomsTotal": 5,
+    "description": "A view-side mid-century with three levels of light, set on a quiet block above the lake. Suites open to private decks. Shared library, great room, and a wet bar designed for long Sunday dinners.",
+    "status": "permits-pending",
+    "expectedMoveIn": "2027-02",
+    "detailUrl": "https://respace.co/leschi",
+    "suitesAvailable": [
+      { "suiteId": "leschi-s1", "bedrooms": 1, "bathrooms": 1, "squareFeet": 410, "sharePrice": 395000, "status": "available" },
+      { "suiteId": "leschi-s2", "bedrooms": 1, "bathrooms": 1, "squareFeet": 450, "sharePrice": 445000, "status": "available" },
+      { "suiteId": "leschi-s3", "bedrooms": 2, "bathrooms": 1, "squareFeet": 560, "sharePrice": 510000, "status": "available" }
+    ]
+  },
+  {
+    "id": "north-end-victorian",
+    "slug": "north-end-victorian",
+    "name": "North End Victorian",
+    "neighborhood": "North End, Tacoma",
+    "metro": "Tacoma, WA",
+    "totalPrice": 880000,
+    "shareCount": 4,
+    "sharePriceMin": 195000,
+    "sharePriceMax": 245000,
+    "shareCountAvailable": 4,
+    "bedroomsTotal": 5,
+    "description": "A turn-of-the-century Victorian on a leafy North End street. Original woodwork. Big shared kitchen, big shared porch, big shared backyard. Walkable to Stadium District coffee and Wright Park.",
+    "status": "live",
+    "expectedMoveIn": "2026-11",
+    "detailUrl": "https://respace.co/tacoma-north-end",
+    "suitesAvailable": [
+      { "suiteId": "nev-s1", "bedrooms": 1, "bathrooms": 1, "squareFeet": 360, "sharePrice": 195000, "status": "available" },
+      { "suiteId": "nev-s2", "bedrooms": 1, "bathrooms": 1, "squareFeet": 410, "sharePrice": 225000, "status": "available" },
+      { "suiteId": "nev-s3", "bedrooms": 2, "bathrooms": 1, "squareFeet": 540, "sharePrice": 245000, "status": "available" }
+    ]
+  }
+]
