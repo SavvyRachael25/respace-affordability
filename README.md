@@ -22,7 +22,31 @@ npm run build
 Both API routes are currently stubbed:
 
 - `POST /api/capture` — validates email, logs server-side. Will forward to GHL when `NEXT_PUBLIC_RESPACE_AFFORDABILITY_WEBHOOK` is set.
-- `POST /api/lead` — validates name/email/phone/property, logs server-side, returns a fake `leadId`. Real GHL routing, broker notification, and Supabase persistence are deferred. Replace the body of `forwardLead()` in [src/app/api/lead/route.ts](src/app/api/lead/route.ts) when ready.
+- `POST /api/lead` — validates name/email/phone/property, builds a GHL-ready payload, logs it, returns a fake `leadId`. Replace the body of `forwardLead()` in [src/app/api/lead/route.ts](src/app/api/lead/route.ts) when ready.
+
+### Broker flow (GHL → FUB)
+
+reSpace brokers work in **Follow Up Boss (FUB)**, not GHL. The flow is:
+
+```
+/api/lead  →  GHL webhook (tags + custom fields)
+              ↓ GHL→FUB sync (configured in GHL Integrations)
+              FUB contact created with tags carried over
+              ↓ FUB smart list / pond rules
+              Broker picks up the lead
+```
+
+Tags are the contract FUB brokers filter on. The taxonomy lives in `buildGhlPayload()` in [src/app/api/lead/route.ts](src/app/api/lead/route.ts) — edit carefully, brokers' saved views depend on it. Current tags include:
+
+- `respace-buyer-pool`, `respace-affordability-calc`, `respace-lead-submitted`
+- `respace-suite-claimed` *(or `respace-property-interested` if no suite picked)*
+- `respace-property-<slug>` — e.g. `respace-property-leschi-collection`
+- `respace-suite-<id>` — e.g. `respace-suite-leschi-outlook-a`
+- `respace-metro-<metro>` — e.g. `respace-metro-seattle-wa`
+- `respace-fit-within-reach` or `respace-fit-stretch` — buyer can afford the picked suite or not
+- `respace-utm-<source>` — friend-share leads tagged with `respace-utm-friend`
+
+Custom fields prefixed `respace_*` carry the buyer's affordability profile (income, debts, down, solo/co-owner max, gap) so the broker sees the qualification context on the FUB contact card without leaving the app.
 
 ## Property data
 
