@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { RESPACE_THEME } from "@/lib/affordability/config";
 import { fmtUSD } from "@/lib/affordability/calculate";
 import {
@@ -42,6 +42,15 @@ export function PropertyDetail({
   onSubmitted: () => void;
 }) {
   const shareCeiling = affordability.solo.maxHomeValue;
+
+  // Gallery: first try property.gallery, fall back to hero alone.
+  const images = useMemo<string[]>(() => {
+    if (property.gallery && property.gallery.length > 0) return property.gallery;
+    if (property.heroImage) return [property.heroImage];
+    return [];
+  }, [property.gallery, property.heroImage]);
+  const [activeImageIdx, setActiveImageIdx] = useState(0);
+  const activeImage = images[activeImageIdx];
 
   // Sort suites: within-reach descending by price (best match first),
   // then stretch ascending by price (closest stretch first). Sold/reserved
@@ -108,12 +117,13 @@ export function PropertyDetail({
             <div
               style={{
                 aspectRatio: "4 / 3",
-                background: property.heroImage
-                  ? `url(${property.heroImage}) center/cover`
+                background: activeImage
+                  ? `url(${activeImage}) center/cover`
                   : "linear-gradient(135deg,#e0d8cc,#ccc4b8)",
                 borderRadius: 4,
-                marginBottom: 24,
+                marginBottom: images.length > 1 ? 12 : 24,
                 position: "relative",
+                transition: "background 300ms ease",
               }}
             >
               <span
@@ -137,6 +147,47 @@ export function PropertyDetail({
                 {statusLabel}
               </span>
             </div>
+
+            {/* Thumbnail strip — only render when there's more than one image. */}
+            {images.length > 1 ? (
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: `repeat(${images.length}, 1fr)`,
+                  gap: 8,
+                  marginBottom: 24,
+                }}
+              >
+                {images.map((src, i) => (
+                  <button
+                    key={src + i}
+                    type="button"
+                    onClick={() => setActiveImageIdx(i)}
+                    aria-label={`View image ${i + 1} of ${images.length}`}
+                    aria-pressed={i === activeImageIdx}
+                    style={{
+                      aspectRatio: "4 / 3",
+                      background: `url(${src}) center/cover`,
+                      borderRadius: 2,
+                      border: `2px solid ${
+                        i === activeImageIdx ? T.coral : "transparent"
+                      }`,
+                      padding: 0,
+                      cursor: "pointer",
+                      opacity: i === activeImageIdx ? 1 : 0.7,
+                      transition: "opacity 200ms ease, border 200ms ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.opacity = "1";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.opacity =
+                        i === activeImageIdx ? "1" : "0.7";
+                    }}
+                  />
+                ))}
+              </div>
+            ) : null}
 
             <p
               style={{

@@ -14,6 +14,12 @@
     "description": "Six suites in a Victorian mansion in Seattle's Leschi neighborhood. Each suite includes a private ensuite bath, walk-in closet, private washer/dryer, wet bar, sitting area, and workspace. Shared kitchen, living room, and outdoor spaces.",
     "status": "live",
     "detailUrl": "https://respace.co",
+    "heroImage": "/properties/leschi-exterior.webp",
+    "gallery": [
+      "/properties/leschi-exterior.webp",
+      "https://d2xsxph8kpxj0f.cloudfront.net/310519663333310015/UUfDD9B2a3czptPTkkTF8D/hero_kitchen_v2_e0efdd3a.jpg",
+      "/properties/respace-backyard.webp"
+    ],
     "suitesAvailable": [
       { "suiteId": "leschi-outlook-a", "label": "The Outlook A", "bedrooms": 1, "bathrooms": 1, "squareFeet": 360, "sharePrice": 118750, "status": "available" },
       { "suiteId": "leschi-outlook-b", "label": "The Outlook B", "bedrooms": 1, "bathrooms": 1, "squareFeet": 360, "sharePrice": 118750, "status": "available" },
@@ -39,6 +45,12 @@
     "status": "permits-pending",
     "expectedMoveIn": "2026",
     "detailUrl": "https://thegrovebyrespace.co",
+    "heroImage": "https://d2xsxph8kpxj0f.cloudfront.net/310519663333310015/UUfDD9B2a3czptPTkkTF8D/hero_kitchen_v2_e0efdd3a.jpg",
+    "gallery": [
+      "https://d2xsxph8kpxj0f.cloudfront.net/310519663333310015/UUfDD9B2a3czptPTkkTF8D/hero_kitchen_v2_e0efdd3a.jpg",
+      "https://d2xsxph8kpxj0f.cloudfront.net/310519663333310015/UUfDD9B2a3czptPTkkTF8D/hero_v3_04-CJqnyMwgbNdeo598JjUpWy.png",
+      "https://d2xsxph8kpxj0f.cloudfront.net/310519663333310015/UUfDD9B2a3czptPTkkTF8D/hero_v3_01-hGQkVmehVRtXcHRBU8X4Hu.png"
+    ],
     "suitesAvailable": [
       { "suiteId": "grove-1", "label": "Suite 1", "bedrooms": 1, "bathrooms": 1, "squareFeet": 360, "sharePrice": 179000, "status": "available" },
       { "suiteId": "grove-2", "label": "Suite 2", "bedrooms": 1, "bathrooms": 1, "squareFeet": 380, "sharePrice": 189000, "status": "available" },
