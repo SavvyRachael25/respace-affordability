@@ -11,12 +11,14 @@ export const AFFORDABILITY_CONFIG = {
   maintenanceReserveRate: 0.01,
 };
 
+// Metros reflect reSpace's actual market footprint (per respace.co expansion map):
+// Seattle, Bellevue, Kirkland live now. Tacoma and Portland coming 2026.
 export const METROS = [
   { value: "Seattle, WA", median: 875000 },
   { value: "Bellevue, WA", median: 1450000 },
+  { value: "Kirkland, WA", median: 1100000 },
   { value: "Tacoma, WA", median: 525000 },
-  { value: "Olympia, WA", median: 485000 },
-  { value: "Spokane, WA", median: 410000 },
+  { value: "Portland, OR", median: 545000 },
 ] as const;
 
 export type MetroValue = (typeof METROS)[number]["value"];
