@@ -11,6 +11,8 @@ A talking-points doc for the broker call. Read it, screen-share it, or paraphras
 > Every buyer who lands on respace.co and wonders "could I actually afford this?" now has a tool that answers the question with real math, shows them which suites in which properties they could co-own, and lets them tell us they want a conversation. When they hit that button, the lead comes to you in your inbox within seconds, fully qualified, with the suite they picked, the property they picked, and a complete affordability profile attached.
 >
 > You don't have to chase. You don't have to qualify. You just call.
+>
+> And it's ready to share with your sphere by Friday.
 
 ---
 
@@ -64,7 +66,6 @@ CO-BUYER NOTES
 
 SOURCE
   reSpace affordability calculator
-  UTM: utm_source=friend (came from someone's share link)
   Submitted: 2026-05-13 18:00:00 UTC
   Lead ID: lead_mp4bpnzz_tp6t7l
 
@@ -88,6 +89,41 @@ Three reasons a respace-affordability lead beats a generic respace.co contact-fo
 
 ---
 
+## Who you'll send this to (and why this is bigger than you think)
+
+Friday this is in your hands. Before reSpace pushes it to the public buyer pool, YOU get the link to share with your sphere first.
+
+Here's the list nobody else thinks to make. Read it slowly. You'll recognize the people.
+
+**Your kids who think they'll never own a home.**
+Your 28-year-old in Bellevue making $75K, watching the market go up while their savings barely touch a down payment. They've stopped opening real estate emails. They'll open this one because it's from you. They'll run their numbers. They'll see they could co-own The Outlook A at The Leschi Collection for $118,750 instead of being priced out of Seattle entirely. You become the parent who actually opened a door, not the parent who keeps saying "the market is rough out there."
+
+**Your coworkers in adjacent industries.**
+The mortgage broker, the loan officer, the title rep, the appraiser. They watch buyers walk away every week because the math doesn't work. Send them this and they become a referral source for life because they finally have something to recommend that solves the math.
+
+**The married friends couple who keep "house-hunting on weekends" with no end in sight.**
+They've toured 22 houses in 18 months. They want to stop. They want to move in. Show them they could co-own a $1.4M Victorian for $187K each, and the conversation shifts from "let's tour another one" to "let's call your broker."
+
+**Your sister who is renting in Seattle and just turned 35.**
+She does the same math you do. She knows she's behind. She doesn't want to leave the city. Send this. Watch what happens when she sees she could be in The Conservatory at Leschi for $159,500.
+
+**The teacher at your kid's school who told you at the bake sale she was thinking about leaving Seattle for Tacoma just to afford anything.**
+She doesn't have to leave. North End Tacoma works at her budget AND Leschi works in Seattle. Both are options. She didn't know that.
+
+**The nurse, the firefighter, the cop, the social worker.**
+The essential workers priced out of the cities they serve. The ones who get talked about in policy panels but never actually offered a path. This is a path. They'll respond to this email faster than to anything else they've received this year.
+
+**Your gym friend. Your book club. Your running group. The parents at soccer practice.**
+Anyone who has ever said "I gave up on owning" or "we're priced out" or "we'll never live in [neighborhood we love]." Every one of them is a lead waiting to be activated by you.
+
+**Former clients you couldn't close.**
+You had buyers in 2022 who couldn't make the numbers work. You have a folder somewhere of people who walked away. Send this to all of them. The math has changed. The model has changed. The properties have changed. The conversation is different now.
+
+**The couple who's about to leave Seattle for Tacoma. The couple who's about to leave Tacoma for somewhere cheaper. The couple who's about to leave the PNW entirely.**
+You hear it in your network constantly. People moving down-market because they can't afford up-market. This tool says: you don't have to go down. You can stay where you actually want to live, you just have to share the address with co-owners.
+
+---
+
 ## Attribution: who gets credit
 
 The part you care about. Here's how reSpace tracks the chain:
@@ -101,7 +137,7 @@ The part you care about. Here's how reSpace tracks the chain:
 
 You get full credit for the close. reSpace gets full visibility into marketing ROI. Nobody fights over who owned what.
 
-**Friend-referral attribution.** When a buyer shares the calculator with a friend, the friend's lead is tagged as a friend referral. If both buy into the same property, reSpace and you see the group forming in real time. One lead becomes two becomes four. You close the whole house.
+**Sphere-share attribution.** When you forward the link to your kid, and your kid forwards to a friend, and that friend ends up buying, the chain is traceable. The original share carries your tag. The lead lands in YOUR inbox AND in reSpace's FUB. You get credit for the close. (We can talk about how broker-personalized share links work — short version, you get a link with your name on it that you can put anywhere.)
 
 ---
 
@@ -109,9 +145,11 @@ You get full credit for the close. reSpace gets full visibility into marketing R
 
 Co-homeownership has a structural advantage over single-family resale: every closed property has 4 buyers, not 1.
 
-The affordability tool makes that explicit. After a buyer submits interest, the thank-you page invites them to send the calculator to anyone they'd want to co-own with. The share link carries the property AND the suite, so when the friend lands on the calc, runs their numbers, and picks a suite at the same property, you get the second lead with the friend-share tag.
+The affordability tool makes that explicit. After a buyer submits interest, the thank-you page invites them to send the calculator to anyone they'd want to co-own with. The share link carries the property AND the suite, so when the friend lands on the calc, runs their numbers, and picks a suite at the same property, you get the second lead.
 
 You're not closing 1 deal. You're closing 4. And the calculator is doing the lifting on getting the other 3 in the door.
+
+Multiply that by the number of people in your sphere who you forward the link to. The math gets very interesting very fast.
 
 ---
 
@@ -121,12 +159,23 @@ We collect four financial inputs only: income, monthly debts, down payment, targ
 
 ---
 
-## What we need from each broker
+## The Friday launch
 
-Two answers. No more.
+**Friday, you get the link.** A clean URL with the calculator live, ready to share. The buyer pool, the public buyer page, the email blast — none of that turns on yet. You go first. Your sphere goes first.
 
-1. **The email address where leads should go.** The one you actually check.
-2. **Confirm 24-hour response SLA.** The tool promises buyers a broker reaches out within 24 hours. We need that promise honored.
+**The week between Friday and the public push** is your runway. Forward to anyone in the list above. Texts, DMs, family group chats, "hey haven't talked in a while" emails. Every one of those is a potential lead you didn't have to chase to get.
+
+**Then reSpace flips the switch on the public funnel.** The calculator becomes a primary CTA on respace.co/buyers, the email blast goes out to the full buyer pool, the social posts run. Now you have the public funnel feeding you on top of your sphere leads.
+
+You start a week ahead of the open market. Your sphere is your warm list. You'll close some of them inside two weeks.
+
+---
+
+## What we need from you
+
+We already have your emails. Lead routing is set. The only ask:
+
+**Confirm the 24-hour response SLA.** The tool promises buyers a broker reaches out within 24 hours. We need that promise honored, especially for sphere leads where the buyer trusted YOU enough to even open the email.
 
 That's the entire onboarding.
 
@@ -134,12 +183,11 @@ That's the entire onboarding.
 
 ## The single ask of the call
 
-Two yeses:
+One yes:
 
-- **Confirm 24-hour broker response SLA** across all brokers
-- **Each broker drops their email in the chat or sends it by EOD**
+- **Confirm 24-hour broker response SLA across all brokers**
 
-Once those are in, marketing turns on the calculator on respace.co/buyers as a primary CTA, and the funnel starts.
+Then Friday, you get the link. Your sphere becomes the launch.
 
 ---
 
@@ -159,8 +207,12 @@ The gallery filters to properties in their metro at their share level. If we don
 
 Both still exist. The calculator is an additional top-of-funnel that pre-qualifies AND captures interest in specific suites. It feeds the same pool with better data on each lead. Hold Your Space ($250 refundable) still happens at the broker stage, after the conversation.
 
+## If they ask "do I get a personalized share link?"
+
+Yes. Each broker gets a unique URL we can put on your bio link, in your email signature, in texts. When someone clicks YOUR link and ends up buying, the chain is traceable back to you for attribution and credit.
+
 ---
 
 ## One-line elevator if you get interrupted
 
-> "It's a pre-qualified lead machine. The lead goes to your inbox AND to reSpace's pipeline within seconds of a buyer submitting, with the suite they picked and the full affordability data attached. You don't change how you work. We just feed you better leads."
+> "It's a pre-qualified lead machine that drops suite-specific buyer interest into your inbox AND into reSpace's pipeline. You get it Friday for your sphere first — your kids, your coworkers, your former clients, anyone who's said they're priced out. Then the public funnel turns on a week later. You start ahead."
