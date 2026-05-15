@@ -8,17 +8,92 @@ A talking-points doc for the broker call. Read it, screen-share it, or paraphras
 
 > We just built you a lead machine.
 >
-> Every buyer who lands on respace.co and wonders "could I actually afford this?" now has a tool that answers the question with real math, shows them which suites in which properties they could co-own, and lets them tell us they want a conversation. When they hit that button, the lead lands on your desk inside Follow Up Boss within seconds, fully qualified, with the suite they picked, the property they picked, and a complete affordability profile attached. You don't have to chase. You don't have to qualify. You just call.
+> Every buyer who lands on respace.co and wonders "could I actually afford this?" now has a tool that answers the question with real math, shows them which suites in which properties they could co-own, and lets them tell us they want a conversation. When they hit that button, the lead comes to you within seconds, fully qualified, with the suite they picked, the property they picked, and a complete affordability profile attached. You don't have to chase. You don't have to qualify. You just call.
+>
+> And it works no matter what CRM you use.
 
 ---
 
-## The lead, the moment it lands
+## The "no matter what CRM you use" part
 
-Open FUB. A new contact appears. Here's exactly what you see:
+We know brokers don't all live in the same system. Some of you are on Follow Up Boss. Some on kvCORE. Some on Boomtown, Sierra, BoldTrail, Top Producer, Sisu, or your own thing. Some of you mostly run on email.
 
-**Name, email, phone** — already validated. They typed it themselves.
+So the lead gets delivered three ways at once. You pick how you want to receive it:
 
-**Tags** — these are the filter contract. Every saved view you build keys off these:
+**1. Email (works for everyone).** A clean, structured email lands in your inbox the moment the buyer submits. Plain English summary at the top, all qualification data below in a format any email-parser CRM can read. If you do nothing else, you can run your whole business off this email.
+
+**2. Webhook into your CRM (if your CRM supports it).** Tell us your inbound webhook URL and we'll fire the same data straight into your CRM. New contact created with tags, custom fields, and source attribution.
+
+**3. Native FUB sync (if you're on FUB).** Same tags + custom fields land directly on the contact card via the GHL→FUB integration.
+
+All three carry the same data. All three carry the same tags. All three carry the same affordability profile. You don't pick one and lose the others. You can take the email AND get it in your CRM. Belt and suspenders.
+
+---
+
+## The email you'll get (regardless of CRM)
+
+Here's what hits your inbox the moment a buyer submits interest. This is the universal artifact every broker gets:
+
+```
+Subject: New reSpace lead: Casey Park picked The Outlook A at The Leschi Collection
+
+A new buyer just used the reSpace affordability calculator and picked
+a specific suite. Here's everything you need to call them.
+
+CONTACT
+  Name: Casey Park
+  Email: casey@example.com
+  Phone: (206) 555-1234
+
+PICK
+  Property: The Leschi Collection
+  Neighborhood: Leschi, Seattle
+  Suite: The Outlook A
+  Share price: $118,750
+
+AFFORDABILITY
+  Annual income: $120,000
+  Monthly debts: $450
+  Down payment: $25,000
+  Solo max home value: $345,669
+  Co-owner max home value: $1,382,678
+  Monthly payment they can carry: $2,800
+  Gap: $1,037,009 more home as a co-owner
+
+FIT
+  Within reach. Their solo max ($345,669) covers the share price
+  ($118,750) with room.
+
+CO-BUYER NOTES
+  Open to a group match.
+
+SOURCE
+  reSpace affordability calculator
+  UTM: utm_source=friend (came from someone's share link)
+  Submitted: 2026-05-13 18:00:00 UTC
+  Lead ID: lead_mp4bpnzz_tp6t7l
+
+TAGS (for your CRM's filter views)
+  respace-buyer-pool
+  respace-affordability-calc
+  respace-suite-picked
+  respace-property-leschi-collection
+  respace-suite-leschi-outlook-a
+  respace-metro-seattle-wa
+  respace-fit-within-reach
+  respace-utm-friend
+
+Promise made to buyer: a reSpace broker will reach out within
+24 hours. Clock started 18:00 UTC.
+```
+
+You can read that on your phone in line at Starbucks. You can act on it without opening anything else.
+
+---
+
+## Tags are the universal contract
+
+Every CRM lets you filter by tag. The tags above are the same in every CRM, every email, every webhook payload. That's the contract.
 
 | Tag | What it means |
 |---|---|
@@ -27,75 +102,56 @@ Open FUB. A new contact appears. Here's exactly what you see:
 | `respace-property-leschi-collection` | They want The Leschi Collection |
 | `respace-suite-leschi-outlook-a` | The specific suite they want |
 | `respace-metro-seattle-wa` | Their market |
-| `respace-fit-within-reach` | The suite they picked is inside their budget. Closer to ready |
-| `respace-fit-stretch` | The suite they picked is a reach. Financing conversation |
+| `respace-fit-within-reach` | Suite price is inside their budget. Closer to ready |
+| `respace-fit-stretch` | Suite is a reach. Financing conversation |
 | `respace-utm-friend` | A friend sent them. Group buy is forming |
 
-**Custom fields** — qualification, already done:
-- Annual income
-- Monthly debts
-- Down payment
-- Solo max home value
-- Co-owner max home value (the full property they could afford as 1/N)
-- Monthly payment they can carry
-- The gap between solo and co-owner (the "more home" number)
+Build saved views on these. Examples:
 
-**Notes** — plain English summary at the top of the card so you can skim before opening fields:
+- "Hot: within-reach picks this week"
+- "The Grove leads"
+- "Friend referrals (group-buy potential)"
+- "Stretch leads (financing creativity needed)"
+- "Bellevue market"
 
-> Pick: The Outlook A at The Leschi Collection ($118,750)
-> Within reach. Solo max $345,669 vs share $118,750.
-> Co-buyer notes: Open to a group match.
-
-You see all of that before you dial. No discovery call needed to figure out where they are.
-
----
-
-## How it works under the hood
-
-The plumbing, in three sentences a broker actually wants to hear:
-
-1. **Buyer fills the calc on respace.co.** Four financial inputs. They see what they could afford solo vs. as a co-owner. The gap is usually big enough to surprise them.
-2. **They capture their email, browse properties, pick a suite, hit "Have a broker reach out about [The Outlook A]."** No claim language, no commitment energy. Just a conversation request.
-3. **The lead fires into GHL with the tag taxonomy above, and GHL syncs it into FUB.** Tags carry over. Custom fields carry over. You see it in FUB within seconds.
-
-You never have to log into GHL. You never have to learn a new system. You stay in FUB. The marketing layer just feeds you better leads.
+Works in FUB. Works in kvCORE. Works in Boomtown. Works in your email inbox with a label filter.
 
 ---
 
 ## Why these leads are different
 
-Three things make a respace-affordability lead worth more than a generic respace.co contact form lead:
+Three reasons a respace-affordability lead beats a generic respace.co contact-form lead:
 
-**Pre-qualified financially.** They ran their own numbers. We know they can afford what they're asking about. No tire kickers. No "I'll have to ask my partner about budget."
+**Pre-qualified financially.** They ran their own numbers before they ever filled out a form. We know they can afford what they're asking about. No tire kickers. No "I'll have to ask my partner about budget."
 
-**Suite-specific intent.** They didn't just ask about "your properties." They told us they want The Outlook A at The Leschi Collection. That's a hand raised in a room of options.
+**Suite-specific intent.** They didn't ask "tell me about your properties." They said "I want The Outlook A at The Leschi Collection." That's a hand raised in a room of options.
 
-**Affordability profile attached.** You know their income, their debts, their down payment, their solo max, their gap. You can call ready to talk financing structures, not ready to ask intake questions.
+**Affordability profile attached.** You know their income, their debts, their down payment, their solo max, their gap. You call ready to talk financing structures, not ready to ask intake questions.
 
 ---
 
 ## Attribution: who gets credit
 
-This is the part you care about. Here's how reSpace tracks the chain:
+The part you care about. Here's how reSpace tracks the chain:
 
 **Source → Broker → Close**
 
-- Every lead carries `respace-affordability-calc` as a permanent source tag. That tag never gets removed. It rides through the entire deal.
-- FUB assigns the lead to a broker the moment it lands. You own it from second one.
-- When it closes, FUB reports show both the broker who closed AND the source that brought it in.
-- reSpace leadership can see: this calculator generated X leads in March, Y closed, attributed to brokers A, B, C.
+- Every lead carries `respace-affordability-calc` as a permanent source tag. It rides through the entire deal.
+- You own the lead from the moment it's assigned, in whichever CRM you work in.
+- When it closes, reSpace's marketing system (GHL is the source of truth) can report: this calculator generated X leads in March, Y closed, attributed to brokers A, B, C.
+- You get full credit for the close. reSpace gets full visibility into marketing ROI. Nobody fights over who owned what.
 
-You get full credit for the close. reSpace gets full visibility into which marketing channels are paying off. Nobody fights over who owned what.
+**The marketing system is the source of truth for attribution, not any individual CRM.** This matters because brokers come and go, CRMs come and go, but the GHL record persists. If you switch from FUB to kvCORE next year, the attribution data is still intact.
 
-**Friend-referral attribution gets even better.** When a buyer shares the calculator with a friend (which we make easy), the friend's lead gets tagged `respace-utm-friend`. If the friend buys into the same property as the first buyer, you see the group forming in real time. One lead becomes four. You close the whole house.
+**Friend-referral attribution.** When a buyer shares the calculator with a friend, the friend's lead carries `respace-utm-friend`. If both buy into the same property, you see the group forming in real time. One lead becomes two becomes four. You close the whole house.
 
 ---
 
-## The growth loop nobody talks about
+## The growth loop
 
 Co-homeownership has a structural advantage over single-family resale: every closed property has 4 buyers, not 1.
 
-The affordability tool makes that explicit. After a buyer submits interest in The Outlook A at The Leschi Collection, the thank-you page invites them to send the calculator to anyone they'd want to co-own with. The share link carries the property AND the suite, so when the friend lands on the calc, runs their numbers, and picks a suite at the same property, you get the second lead with `respace-utm-friend` on it.
+The affordability tool makes that explicit. After a buyer submits interest, the thank-you page invites them to send the calculator to anyone they'd want to co-own with. The share link carries the property AND the suite, so when the friend lands on the calc, runs their numbers, and picks a suite at the same property, you get the second lead with the friend-share tag.
 
 You're not closing 1 deal. You're closing 4. And the calculator is doing the lifting on getting the other 3 in the door.
 
@@ -107,45 +163,47 @@ We collect four financial inputs only: income, monthly debts, down payment, targ
 
 ---
 
-## What we need from brokers to make this real
+## What we need from each broker to make this real
 
-1. **Confirm the FUB pipeline.** Which pipeline does an affordability-calc lead drop into? Which smart list or pond rule routes it to the right broker for that metro?
-2. **Confirm custom field mapping.** The `respace_*` custom fields need to map to FUB custom fields. If they don't exist in FUB yet, your FUB admin needs to create them. We have the field list ready to hand over.
-3. **Confirm response SLA.** The tool promises buyers a broker reaches out within 24 hours. We need someone owning that SLA on the broker side.
+Three answers per broker. No more.
 
-Once those three are settled, we flip a switch in GHL and the leads start flowing.
+1. **What CRM do you use?** FUB, kvCORE, Boomtown, Sierra, BoldTrail, Top Producer, Sisu, custom, or email-first?
+2. **If you have a CRM webhook URL, can you share it?** If you don't, no problem. Email delivery still works. Just confirm which email address the lead should land at.
+3. **Confirm 24-hour response SLA.** The tool promises buyers a broker reaches out within 24 hours. We need that promise honored on the broker side.
+
+Once we know your stack, we configure the GHL routing so leads land where you actually work.
 
 ---
 
 ## The single ask of the call
 
-Get a yes on:
-- Confirm 24-hour broker response SLA
-- Confirm FUB pipeline + custom field setup is a yes
-- Confirm broker(s) ready to take Seattle metro leads first
+Two yeses:
 
-Once those three are confirmed, marketing turns on the calculator on respace.co/buyers as a primary CTA, and the funnel starts.
+- **Confirm 24-hour broker response SLA** across all brokers
+- **Each broker tells us their CRM + email by EOD** so we can set up routing
+
+Once those are confirmed, marketing turns on the calculator on respace.co/buyers as a primary CTA, and the funnel starts.
 
 ---
 
 ## If they ask "what's this gonna cost us?"
 
-The tool is built. The pipeline plumbing is built. The compliance is solid. The only ongoing cost is the broker time to respond to leads inside 24 hours, which they should want anyway because these leads are pre-qualified and ready.
+The tool is built. The pipeline plumbing is built. The compliance is solid. The only ongoing cost is the broker time to respond inside 24 hours, which they should want anyway because these leads are pre-qualified and hot.
 
----
+## If they ask "I don't use FUB / I don't use a CRM / I just use email"
+
+Perfect. The email IS the lead. Structured, qualified, ready to call. You don't need anything else.
 
 ## If they ask "what if a buyer wants a property we don't have yet?"
 
-The gallery filters to properties in their metro at their share level. If we don't have one, we show a "we'll notify you when one opens up" capture so the lead doesn't die. They go into the buyer pool and we route them when supply hits.
-
----
+The gallery filters to properties in their metro at their share level. If we don't have one, we capture them into a "notify me when one opens up" list so the lead doesn't die. They go into the buyer pool with the same affordability profile attached and we route them when supply hits.
 
 ## If they ask "what about the existing buyer pool / Hold Your Space funnel?"
 
-Both still exist. The calculator is an additional top-of-funnel that pre-qualifies AND captures interest in specific suites. It feeds the same pool, with better data on each lead. Hold Your Space ($250 refundable) still happens at the broker stage, not before.
+Both still exist. The calculator is an additional top-of-funnel that pre-qualifies AND captures interest in specific suites. It feeds the same pool with better data on each lead. Hold Your Space ($250 refundable) still happens at the broker stage, after the conversation.
 
 ---
 
 ## One-line elevator if you get interrupted
 
-> "It's a pre-qualified lead machine that drops suite-specific buyer interest into FUB inside 24 hours with full affordability data attached. You stay in FUB. Marketing handles the rest."
+> "It's a pre-qualified lead machine that drops suite-specific buyer interest into your inbox AND your CRM, whichever you use, inside 24 hours with full affordability data attached. You don't change how you work. We just feed you better leads."
