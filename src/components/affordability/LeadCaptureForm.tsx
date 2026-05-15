@@ -148,8 +148,8 @@ export function LeadCaptureForm({
         }}
       >
         {suiteLabel
-          ? `Tell us you want ${suiteLabel} at ${property.name}.`
-          : "Tell our broker who you are."}
+          ? `Let's talk about ${suiteLabel} at ${property.name}.`
+          : "Let's talk."}
       </h3>
       <p
         style={{

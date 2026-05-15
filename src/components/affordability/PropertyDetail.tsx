@@ -468,7 +468,7 @@ function SuiteCard({
             borderRadius: 2,
           }}
         >
-          Picked
+          Your pick
         </span>
       ) : null}
 
