@@ -7,33 +7,32 @@ const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // Stage 3 lead capture endpoint.
 //
-// BROKER FLOW (CRM-agnostic)
-// --------------------------
-// reSpace brokers don't all use the same CRM. Some are on Follow Up Boss,
-// some on kvCORE, Boomtown, Sierra, BoldTrail, Top Producer, Sisu, custom
-// builds, or just email. So the routing layer fans out from GHL:
+// BROKER FLOW
+// -----------
+// Every lead is delivered two places:
 //
-//   /api/lead  →  GHL webhook (single source of truth for attribution)
-//                 ↓ fan-out, configured as a GHL workflow:
-//                 ├─ Plain-English email to broker's inbox (universal)
-//                 ├─ FUB sync if broker uses FUB (tags + custom fields)
-//                 ├─ Per-broker webhook if their CRM supports inbound
-//                 └─ CC to reSpace HQ on every leg (attribution safety net)
+//   /api/lead  →  GHL webhook (source of truth)
+//                 ↓ GHL workflow:
+//                 ├─ Email to the assigned broker's inbox (their
+//                 │   working surface, ready to act on from a phone)
+//                 └─ reSpace's central FUB (tags + custom fields,
+//                     full attribution for leadership)
 //
-// The email is the universal artifact. Every broker gets it. CRM-specific
-// paths are additive, not replacements.
+// Brokers work their email. reSpace's FUB is the org's mirror for
+// attribution, funnel health, and reporting. No per-broker CRM
+// configuration — keep it simple.
 //
-// Tags are the contract every CRM filters on. The taxonomy generated in
-// buildGhlPayload() below travels as JSON in the webhook, as text in the
-// email, and as contact tags in any CRM that consumes either. Edit it
-// carefully — brokers' saved views depend on it.
+// Tags travel both ways: as text in the email (broker can filter their
+// inbox by tag string) and as contact tags in FUB (reSpace's saved
+// views filter on them). The taxonomy is generated in buildGhlPayload()
+// below — edit carefully, both surfaces depend on it.
 //
 // CURRENT STATE
 // -------------
 // Stubbed. Validates input, logs the GHL-ready payload, returns a fake
 // leadId. Real GHL routing is deferred. Wire by replacing the body of
 // forwardLead() — buildGhlPayload() already produces the exact shape GHL
-// expects, and GHL handles the fan-out to email + per-broker CRMs.
+// expects, and the GHL workflow handles delivery to broker email + FUB.
 
 type LeadSubmission = {
   name: string;
@@ -206,16 +205,12 @@ async function forwardLead(payload: ReturnType<typeof buildGhlPayload>) {
   //     body: JSON.stringify(payload),
   //   });
   //
-  // From GHL, a single workflow fans the lead out to all relevant
-  // surfaces:
-  //   - Universal email to the assigned broker's inbox (every broker
-  //     gets one, formatted as labeled text any CRM can parse)
-  //   - FUB native sync for FUB brokers (tags + custom fields)
-  //   - Per-broker webhook for brokers whose CRM accepts inbound
-  //   - CC to reSpace HQ on every leg for attribution + safety net
+  // From GHL, a single workflow delivers the lead to two surfaces:
+  //   - Email to the assigned broker's inbox (formatted, ready to act on)
+  //   - reSpace's central FUB (tags + custom fields, attribution mirror)
   //
-  // Configure the fan-out in GHL Workflows. The payload below is the
-  // single canonical shape; GHL handles delivery transformations per
-  // destination.
+  // Configure both legs in GHL Workflows. The payload below is the
+  // single canonical shape; GHL handles email-template rendering and
+  // FUB sync per destination.
   console.log("[lead] GHL-ready payload", JSON.stringify(payload, null, 2));
 }

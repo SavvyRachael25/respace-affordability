@@ -24,26 +24,22 @@ Both API routes are currently stubbed:
 - `POST /api/capture` — validates email, logs server-side. Will forward to GHL when `NEXT_PUBLIC_RESPACE_AFFORDABILITY_WEBHOOK` is set.
 - `POST /api/lead` — validates name/email/phone/property, builds a GHL-ready payload, logs it, returns a fake `leadId`. Replace the body of `forwardLead()` in [src/app/api/lead/route.ts](src/app/api/lead/route.ts) when ready.
 
-### Broker flow (CRM-agnostic)
+### Broker flow
 
-Not all reSpace brokers use the same CRM. Some are on **Follow Up Boss**, some on **kvCORE**, **Boomtown**, **Sierra**, **BoldTrail**, **Top Producer**, **Sisu**, custom builds, or just email. The routing layer fans out so every broker gets the lead in whatever system they actually work in.
+Every lead lands two places:
 
 ```
-/api/lead  →  GHL webhook (single source of truth for attribution)
-              ↓ fan-out, configured in GHL workflow:
-              ├─ Plain-English email to broker's inbox (universal)
-              ├─ FUB sync if broker uses FUB (tags + custom fields)
-              ├─ Per-broker webhook if their CRM supports it
-              └─ CC to reSpace HQ on all of the above
+/api/lead  →  GHL webhook (source of truth)
+              ↓ GHL workflow:
+              ├─ Email to the assigned broker's inbox (formatted, ready to act on)
+              └─ reSpace's central FUB (tags + custom fields, full attribution)
 ```
 
-**The email is the universal artifact.** Every broker gets a formatted email with the affordability profile, the picked suite, and the tag list, regardless of what CRM they use. If their CRM has an email parser (most do), the email becomes a contact automatically. If they work email-first, the email IS the lead.
+**The email is the broker's working surface.** Plain-English summary at the top, full affordability profile and tag list below. Brokers can act on it from a phone, parse it into their own CRM if they want, or just keep it in their inbox.
 
-**Webhook routing** is optional and per-broker. GHL workflows fire the JSON payload at a broker's CRM webhook URL if they share one.
+**reSpace's central FUB is the company's source of truth.** Every lead is mirrored there with tags + custom fields so leadership sees funnel volume, attribution, and pipeline health regardless of which broker ends up working the lead.
 
-**FUB sync** is the native path for brokers who use FUB. Tags + custom fields land on the contact card via GHL's FUB integration.
-
-Tags are the contract every CRM filters on. The taxonomy lives in `buildGhlPayload()` in [src/app/api/lead/route.ts](src/app/api/lead/route.ts) — edit carefully, brokers' saved views depend on it. Current tags include:
+Tags are the contract for filtering in both surfaces. The taxonomy lives in `buildGhlPayload()` in [src/app/api/lead/route.ts](src/app/api/lead/route.ts) — edit carefully, both FUB saved views and email-parser rules depend on it. Current tags include:
 
 - `respace-buyer-pool`, `respace-affordability-calc`, `respace-lead-submitted`
 - `respace-suite-picked` *(or `respace-property-interested` if no suite picked)*
