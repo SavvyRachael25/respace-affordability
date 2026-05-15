@@ -39,7 +39,7 @@ reSpace brokers work in **Follow Up Boss (FUB)**, not GHL. The flow is:
 Tags are the contract FUB brokers filter on. The taxonomy lives in `buildGhlPayload()` in [src/app/api/lead/route.ts](src/app/api/lead/route.ts) — edit carefully, brokers' saved views depend on it. Current tags include:
 
 - `respace-buyer-pool`, `respace-affordability-calc`, `respace-lead-submitted`
-- `respace-suite-claimed` *(or `respace-property-interested` if no suite picked)*
+- `respace-suite-picked` *(or `respace-property-interested` if no suite picked)*
 - `respace-property-<slug>` — e.g. `respace-property-leschi-collection`
 - `respace-suite-<id>` — e.g. `respace-suite-leschi-outlook-a`
 - `respace-metro-<metro>` — e.g. `respace-metro-seattle-wa`

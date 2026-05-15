@@ -1086,7 +1086,7 @@ function LeadSubmittedBlock({
             marginBottom: 16,
           }}
         >
-          {suiteLabel ? `${suiteLabel} claimed` : "Interest received"}
+          {suiteLabel ? "Your pick is in" : "Interest received"}
         </p>
         <h2
           style={{

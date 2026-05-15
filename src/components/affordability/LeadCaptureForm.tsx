@@ -148,7 +148,7 @@ export function LeadCaptureForm({
         }}
       >
         {suiteLabel
-          ? `Claim ${suiteLabel} at ${property.name}.`
+          ? `Tell us you want ${suiteLabel} at ${property.name}.`
           : "Tell our broker who you are."}
       </h3>
       <p
@@ -255,7 +255,7 @@ export function LeadCaptureForm({
         {submitting
           ? "Sending..."
           : suiteLabel
-          ? `Claim ${suiteLabel}`
+          ? `Send my interest in ${suiteLabel}`
           : "Submit my interest"}
       </button>
 

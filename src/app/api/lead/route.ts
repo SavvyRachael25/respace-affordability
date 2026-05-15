@@ -124,7 +124,7 @@ function buildGhlPayload(s: LeadSubmission, leadId: string) {
     "respace-buyer-pool",
     "respace-affordability-calc",
     "respace-lead-submitted",
-    s.suiteId ? "respace-suite-claimed" : "respace-property-interested",
+    s.suiteId ? "respace-suite-picked" : "respace-property-interested",
     `respace-property-${s.propertySlug}`,
     s.suiteId ? `respace-suite-${s.suiteId}` : null,
     metroSlug ? `respace-metro-${metroSlug}` : null,
@@ -132,14 +132,14 @@ function buildGhlPayload(s: LeadSubmission, leadId: string) {
     s.utmSource ? `respace-utm-${s.utmSource}` : null,
   ].filter((t): t is string => Boolean(t));
 
-  const claimSummary = s.suiteLabel
-    ? `Claimed ${s.suiteLabel} at ${s.propertyName} ($${sharePrice.toLocaleString()})`
+  const pickSummary = s.suiteLabel
+    ? `Pick: ${s.suiteLabel} at ${s.propertyName} ($${sharePrice.toLocaleString()})`
     : `Interested in ${s.propertyName} (share from $${sharePrice.toLocaleString()})`;
   const fitSummary = withinReach
     ? `Within reach. Solo max $${soloMax.toLocaleString()} vs share $${sharePrice.toLocaleString()}.`
     : `Stretch. Solo max $${soloMax.toLocaleString()} vs share $${sharePrice.toLocaleString()}.`;
   const noteSummary = [
-    claimSummary,
+    pickSummary,
     fitSummary,
     s.notes ? `Co-buyer notes: ${s.notes}` : null,
   ]
