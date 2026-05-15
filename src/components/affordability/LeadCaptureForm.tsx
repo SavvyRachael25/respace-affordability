@@ -255,8 +255,8 @@ export function LeadCaptureForm({
         {submitting
           ? "Sending..."
           : suiteLabel
-          ? `Send my interest in ${suiteLabel}`
-          : "Submit my interest"}
+          ? `Have a broker reach out about ${suiteLabel}`
+          : "Have a broker reach out"}
       </button>
 
       <p
